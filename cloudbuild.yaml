@@ -1,13 +1,13 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/nani-food-dev/simple-api-clound-run', '.']
+  args: ['build', '-t', 'gcr.io/nani-food-dev/simple-api-cloud-run', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/nani-food-dev/simple-api-clound-run']
+  args: ['push', 'gcr.io/nani-food-dev/simple-api-cloud-run']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'simple-api-clound-run', '--image', 'gcr.io/nani-food-dev/simple-api-clound-run', '--region', 'REGION', '--platform', 'managed', '--port', '3000']
+  args: ['run', 'deploy', 'simple-api-clound-run', '--image', 'gcr.io/nani-food-dev/simple-api-cloud-run', '--region', 'REGION']
 images:
-- gcr.io/nani-food-dev/simple-api-clound-run
+- gcr.io/nani-food-dev/simple-api-cloud-run
