@@ -1,0 +1,13 @@
+steps:
+# Build the container simple-api-clound-run
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/nani-food-dev/simple-api-clound-run', '.']
+# Push the container simple-api-clound-run to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/nani-food-dev/simple-api-clound-run']
+# Deploy container simple-api-clound-run to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'SERVICE-NAME', '--simple-api-clound-run', 'gcr.io/nani-food-dev/simple-api-clound-run', '--region', 'southamerica-east1', '--platform', 'managed', '--port', '3000']
+simple-api-clound-runs:
+- gcr.io/nani-food-dev/simple-api-clound-run
