@@ -8,7 +8,7 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'simple-api-cloud-run', '--image', 'gcr.io/nani-food-dev/simple-api-cloud-run:$COMMIT_SHA', '--region', 'us-central1']
+  args: ['run', 'deploy', 'simple-api-cloud-run', '--image', 'gcr.io/nani-food-dev/simple-api-cloud-run:$COMMIT_SHA', '--region', 'us-central1', '--allow-unauthenticated']
 images:
 - gcr.io/nani-food-dev/simple-api-cloud-run:$COMMIT_SHA
 
