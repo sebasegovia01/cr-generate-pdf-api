@@ -1,6 +1,4 @@
-FROM node:alpine AS development
-
-RUN apk add libreoffice
+FROM bcgovimages/alpine-node-libreoffice AS development
 
 WORKDIR /usr/src/app
 

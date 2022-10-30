@@ -27,7 +27,7 @@ export class CloudStorageService {
       try {
         console.log(`Start upload file ${fileName}`);
         const uploadResult = await storage.bucket(bucketName).upload(`${fileName}`);
-        console.log('File upload successfully');
+        console.log('File upload successfully', uploadResult);
         return resolve(uploadResult);
       } catch (error) {
         console.log(error);
