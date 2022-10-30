@@ -10,6 +10,7 @@ export class GenerateController {
   @Post()
   async generate(@Body() body: GeneratePdfDto): Promise<any> {
     console.log(body);
-    return this.generateService.generatePDF();
+    const response = await await this.generateService.generatePDF();
+    return response;
   }
 }
