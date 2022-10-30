@@ -1,6 +1,6 @@
-FROM node:17-alpine AS development
+FROM node:alpine AS development
 
-RUN apt-get install -y libreoffice && apt-get clean
+RUN apk add libreoffice
 
 WORKDIR /usr/src/app
 
