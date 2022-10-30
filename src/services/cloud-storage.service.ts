@@ -11,7 +11,7 @@ export class CloudStorageService {
       try {
         const tmpfilename = `./tmp-pdf/${file}`;
         const options = { destination: tmpfilename };
-        await storage.bucket(bucketName).file(tmpfilename).download(options);
+        await storage.bucket(bucketName).file(file).download(options);
         return resolve(tmpfilename);
       } catch (error) {
         console.log(error);
