@@ -1,6 +1,8 @@
 FROM node:14 AS development
 
-RUN apk update && apk add --no-cache libreoffice
+RUN apt-get update -y \
+    && apt-get install -y libreoffice \
+    && apt-get clean
 
 WORKDIR /usr/src/app
 
@@ -14,7 +16,9 @@ RUN npm run build
 
 FROM node:14 as production
 
-RUN apk update && apk add --no-cache libreoffice
+RUN apt-get update -y \
+    && apt-get install -y libreoffice \
+    && apt-get clean
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
