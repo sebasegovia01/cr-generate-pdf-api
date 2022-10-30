@@ -14,7 +14,7 @@ export class CloudStorageService {
         const options = { destination: tmpfilename };
         await storage.bucket(bucketName).file(file).download(options);
         console.log('File download successfully');
-        return resolve(tmpfilename);
+        return resolve(file);
       } catch (error) {
         console.log(error);
         return reject(error);
@@ -26,7 +26,7 @@ export class CloudStorageService {
     return new Promise<any>(async (resolve, reject) => {
       try {
         console.log(`Start upload file ${fileName}`);
-        const uploadResult: UploadResponse = await storage.bucket(bucketName).upload(`${fileName}`);
+        const uploadResult: UploadResponse = await storage.bucket(bucketName).upload(`./tmp-pdf/${fileName}`);
         console.log(`Start making public upload file ${fileName}`);
         await uploadResult[0].makePublic();
         const sgnedURL = await uploadResult[0].publicUrl();
