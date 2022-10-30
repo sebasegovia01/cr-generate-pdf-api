@@ -14,9 +14,7 @@ RUN npm run build
 
 FROM node:alpine as production
 
-RUN apt-get update -y \
-    && apt-get install -y libreoffice \
-    && apt-get clean
+RUN apk update && apk add --no-cache libreoffice
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
