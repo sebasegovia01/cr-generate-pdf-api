@@ -25,13 +25,29 @@ export class CloudStorageService {
   async uploadFile(bucketName, fileName) {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        console.log('Start upload file');
-        await storage.bucket(bucketName).upload(`${fileName}`);
+        console.log(`Start upload file ${fileName}`);
+        const uploadResult = await storage.bucket(bucketName).upload(`${fileName}`);
         console.log('File upload successfully');
-        return resolve(true);
+        return resolve(uploadResult);
       } catch (error) {
         console.log(error);
         return reject(error);
+      }
+    });
+  }
+
+  async listBucketFiles(bucketName: string): Promise<string[]> {
+    return new Promise<string[]>(async (resolve, reject) => {
+      try {
+        const storage = new Storage();
+        const filesList = [];
+        const [files] = await storage.bucket(bucketName).getFiles();
+        files.forEach(file => {
+          filesList.push(file.name);
+        });
+        return resolve(filesList);
+      } catch (error) {
+
       }
     });
   }

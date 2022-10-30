@@ -22,34 +22,23 @@ export class GenerateController {
     const { template } = body;
     const bucketName = 'nani-food-dev-pdf-templates';
     const processedBucketName = 'nani-food-dev-pdf-processed';
-
     try {
       const tmpTemplate = await this.cloudStorageService.downloadFileFrom(bucketName, template);
       const tmpPdf = await this.pdfService.generatePDF(tmpTemplate);
-      await this.cloudStorageService.uploadFile(processedBucketName, tmpPdf);
-      console.log(tmpPdf);
-      // await storage.bucket(processedBucketName).upload(tmpPdf);
-      console.info(`PDF Upload successfully to ${processedBucketName}`);
+      const uploadResult = await this.cloudStorageService.uploadFile(processedBucketName, tmpPdf);
+      console.log(uploadResult);
+      console.info(`PDF Upload successfully to ${processedBucketName}`, uploadResult);
     } catch (error) {
       console.log('Error trying generate pdf');
       console.log(error);
     }
 
-    const response = await await this.generateService.generatePDF();
-    return response;
+    return 'done';
   }
 
   @Get('list')
-  listfiles(): Promise<any> {
-    const storage = new Storage();
-    const filesList = [];
-    async function listFiles() {
-      const [files] = await storage.bucket('nani-food-dev-pdf-templates').getFiles();
-      files.forEach(file => {
-        filesList.push(file.name);
-      });
-    }
-    listFiles().catch(console.error);
+  async listfiles(@Body('template') bucketName: string): Promise<any> {
+    const filesList = await this.cloudStorageService.listBucketFiles(bucketName);
     return Promise.resolve(filesList);
   }
 

@@ -1,8 +1,6 @@
-FROM node:14 AS development
+FROM node:17-alpine AS development
 
-RUN apt-get update -y \
-    && apt-get install -y libreoffice \
-    && apt-get clean
+RUN apt-get install -y libreoffice && apt-get clean
 
 WORKDIR /usr/src/app
 
@@ -14,11 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:14 as production
-
-RUN apt-get update -y \
-    && apt-get install -y libreoffice \
-    && apt-get clean
+FROM development as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
