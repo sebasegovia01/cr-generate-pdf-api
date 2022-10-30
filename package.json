@@ -23,6 +23,7 @@
     "docker:create-image": "docker build -t simple-api-cloud-run:dev ."
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.6.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
