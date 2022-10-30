@@ -26,6 +26,7 @@ export class GenerateController {
     try {
       const tmpTemplate = await this.cloudStorageService.downloadFileFrom(bucketName, template);
       const tmpPdf = await this.pdfService.generatePDF(tmpTemplate);
+      await this.cloudStorageService.uploadFile(processedBucketName, tmpPdf);
       console.log(tmpPdf);
       // await storage.bucket(processedBucketName).upload(tmpPdf);
       console.info(`PDF Upload successfully to ${processedBucketName}`);

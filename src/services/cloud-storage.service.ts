@@ -21,4 +21,18 @@ export class CloudStorageService {
       }
     });
   }
+
+  async uploadFile(bucketName, fileName) {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        console.log('Start upload file');
+        await storage.bucket(bucketName).upload(`${fileName}`);
+        console.log('File upload successfully');
+        return resolve(true);
+      } catch (error) {
+        console.log(error);
+        return reject(error);
+      }
+    });
+  }
 }

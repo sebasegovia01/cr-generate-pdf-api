@@ -10,7 +10,7 @@ export class PDFService {
   async generatePDF(fileName: string): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        const cmd = `libreoffice --headless --convert-to pdf --outdir ./tmp-pdf ./tmp-pdf/${fileName}`;
+        const cmd = `libreoffice --headless --convert-to pdf --outdir ./tmp-pdf ${fileName}`;
         console.log(cmd);
         const { stdout, stderr } = await exec(cmd);
         if (stderr) {
