@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
-const libre = require('libreoffice-convert');
-libre.convertAsync = require('util').promisify(libre.convert);
 
 @Injectable()
 export class PDFService {

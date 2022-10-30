@@ -1,18 +1,12 @@
 import { GeneratePdfDto } from '@dtos/generate-pdf.dto';
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { GenerateService } from './generate.service';
-import { Storage } from '@google-cloud/storage';
 import { PDFService } from '@services/pdf.services';
 import { CloudStorageService } from '@services/cloud-storage.service';
-
-// import { LoggingWinston } from '@google-cloud/logging-winston';
-// import * as winston from 'winston';
 
 @Controller('generate')
 export class GenerateController {
 
   constructor(
-    private readonly generateService: GenerateService,
     private pdfService: PDFService,
     private cloudStorageService: CloudStorageService) { }
 
