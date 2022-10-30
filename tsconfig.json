@@ -18,7 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@dtos/*": ["./src/dtos/*"]
+      "@dtos/*": ["./src/dtos/*"],
+      "@services/*": ["./src/services/*"]
     }
   }
 }
