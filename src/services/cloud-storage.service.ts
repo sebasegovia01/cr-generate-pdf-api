@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Storage } from '@google-cloud/storage';
+import { Storage, UploadResponse } from '@google-cloud/storage';
 
 const storage = new Storage();
 
@@ -26,9 +26,12 @@ export class CloudStorageService {
     return new Promise<any>(async (resolve, reject) => {
       try {
         console.log(`Start upload file ${fileName}`);
-        const uploadResult = await storage.bucket(bucketName).upload(`${fileName}`);
-        console.log('File upload successfully', uploadResult);
-        await storage.bucket(bucketName).file(fileName).makePublic();
+        const uploadResult: UploadResponse = await storage.bucket(bucketName).upload(`${fileName}`);
+        console.log(`Start making public upload file ${fileName}`);
+        await uploadResult[0].makePublic();
+        const sgnedURL = await uploadResult[0].publicUrl();
+        console.log('File upload successfully', sgnedURL, );
+        // await storage.bucket(bucketName).file(fileName).makePublic();
         return resolve(uploadResult);
       } catch (error) {
         console.log(error);
