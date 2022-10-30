@@ -4,7 +4,7 @@ import { GenerateService } from './generate.service';
 import { Storage } from '@google-cloud/storage';
 import Libre from 'libreoffice-convert';
 import { LoggingWinston } from '@google-cloud/logging-winston';
-import winston from 'winston';
+import * as winston from 'winston';
 
 // Create logging
 const loggingWinston = new LoggingWinston();
@@ -38,16 +38,11 @@ export class GenerateController {
       const bufferContents = Buffer.from(htmlTemplate);
       logger.info({ step: 'Generate buffer.from', content: bufferContents });
       await Libre.convert(bufferContents, '/tmp-pdf/generate-pdf.pdf', undefined, async (err, data) => {
-        logger.info({ step: 'Create PDF', content: bufferContents });
-
-        logger.info(err);
-        logger.info(data);
-
-        const newFile = await storage.bucket(processedBucketName).file('generate-pdf.pdf').save(data);
-        logger.info(newFile);
+        logger.info({ step: 'Create PDF', data, err });
         logger.info('PDF Created successfully');
       });
-
+      await storage.bucket(processedBucketName).upload('/tmp-pdf/generate-pdf.pdf');
+      logger.info(`PDF Upload successfully to ${processedBucketName}`);
     } catch (error) {
       console.log('Error trying generate pdf');
       console.log(error);
