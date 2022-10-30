@@ -24,6 +24,24 @@ export class PDFService {
         return reject(error);
       }
     });
+  }
 
+  async deleteGeneratedTempPdf(tmppdf: string): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
+      try {
+        const cmd = `rm -rf ${tmppdf}`;
+        console.log(cmd);
+        const { stdout, stderr } = await exec(cmd);
+        if (stderr) {
+          console.log(stderr);
+          return reject(false);
+        }
+        console.log(stdout);
+        return resolve(true);
+      } catch (error) {
+        console.log(error);
+        return reject(false);
+      }
+    });
   }
 }

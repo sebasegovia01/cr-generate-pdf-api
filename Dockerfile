@@ -1,8 +1,6 @@
 FROM node:alpine AS development
 
-RUN apt-get update -y \
-    && apt-get install -y libreoffice \
-    && apt-get clean
+RUN apk update && apk add --no-cache libreoffice
 
 WORKDIR /usr/src/app
 
