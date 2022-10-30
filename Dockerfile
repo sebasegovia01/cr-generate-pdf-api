@@ -1,4 +1,4 @@
-FROM node:alpine AS development
+FROM node:14 AS development
 
 RUN apk update && apk add --no-cache libreoffice
 
@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:alpine as production
+FROM node:14 as production
 
 RUN apk update && apk add --no-cache libreoffice
 
