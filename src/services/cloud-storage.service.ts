@@ -27,11 +27,10 @@ export class CloudStorageService {
       try {
         console.log(`Start upload file ${fileName}`);
         const uploadResult: UploadResponse = await storage.bucket(bucketName).upload(`./tmp-pdf/${fileName}`);
-        console.log(`Start making public upload file ${fileName}`);
-        await uploadResult[0].makePublic();
-        const signedURL = await uploadResult[0].publicUrl();
-        console.log('File upload successfully', signedURL);
-        // await storage.bucket(bucketName).file(fileName).makePublic();
+        console.log(`Successfull pload file ${fileName}`);
+        //await uploadResult[0].makePublic();
+        // const signedURL = await uploadResult[0].publicUrl();
+        // console.log('File upload successfully', signedURL);
         return resolve(uploadResult);
       } catch (error) {
         console.log(error);
