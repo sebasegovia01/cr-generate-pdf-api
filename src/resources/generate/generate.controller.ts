@@ -35,13 +35,4 @@ export class GenerateController {
     const filesList = await this.cloudStorageService.listBucketFiles(bucketName);
     return Promise.resolve(filesList);
   }
-
-  @Get('test-pdf')
-  async test(): Promise<any> {
-    const tmpTemplate = await this.cloudStorageService.downloadFileFrom('nani-food-dev-pdf-templates', 'simple-template.html');
-    console.log(tmpTemplate);
-    const response = await this.pdfService.generatePDF(tmpTemplate);
-    console.log(response);
-    return Promise.resolve(response);
-  }
 }
