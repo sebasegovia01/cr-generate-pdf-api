@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { writeFileSync, readFileSync } from 'fs';
 import { fileSync } from 'tmp';
 import * as path from 'path';
-import fs from 'fs';
-import os from 'os';
+import * as fs from 'fs';
+import * as os from 'os';
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 
