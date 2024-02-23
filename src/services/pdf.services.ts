@@ -6,7 +6,6 @@ const exec = promisify(require('child_process').exec);
 
 @Injectable()
 export class PDFService {
-
   async generatePDF(fileName: string): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       try {
@@ -45,7 +44,10 @@ export class PDFService {
     });
   }
 
-  async generateEncryptPDF(base64Data: string, password: string): Promise<string> {
+  async generateEncryptPDF(
+    base64Data: string,
+    password: string,
+  ): Promise<string> {
     return new Promise<any>(async (resolve, reject) => {
       try {
         const pdfBuffer = Buffer.from(base64Data, 'base64');
