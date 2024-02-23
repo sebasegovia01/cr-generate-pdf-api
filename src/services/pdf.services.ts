@@ -61,7 +61,7 @@ export class PDFService {
         console.log('tmpInput: ', tmpInput);
         writeFileSync(tmpInput.name, pdfBuffer);
 
-        const tmpOutput = fileSync({ postfix: '.pdf' });
+        //const tmpOutput = fileSync({ postfix: '.pdf' });
 
         const cmd = `libreoffice --headless --convert-to 'pdf:writer_pdf_Export:{"EncryptFile":{"type":"boolean","value":"true"},"DocumentOpenPassword":{"type":"string","value":"${password}"}}' --outdir /tmp ${tmpInput.name}`;
         console.log(cmd);
@@ -70,10 +70,13 @@ export class PDFService {
           return reject(stderr);
         }
         console.log(stdout);
-        const encryptedPdfBuffer = readFileSync(tmpOutput.name);
+        //const encryptedPdfBuffer = readFileSync(tmpOutput.name);
+        // El nombre del archivo encriptado será el mismo que el del archivo de entrada, pero en el directorio /tmp
+        const encryptedPdfPath = path.join(tmpDir, path.basename(tmpInput.name));
+        const encryptedPdfBuffer = readFileSync(encryptedPdfPath);
 
         tmpInput.removeCallback();
-        tmpOutput.removeCallback();
+        //tmpOutput.removeCallback();
 
         return resolve(encryptedPdfBuffer.toString('base64'));
       } catch (error) {
