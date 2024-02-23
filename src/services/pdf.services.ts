@@ -69,7 +69,7 @@ export class PDFService {
 
         const officeExecPath =
           process.env.NODE_ENV === 'production'
-            ? 'libreoffice'
+            ? '/usr/bin/libreoffice'
             : 'cd /Applications/LibreOffice.app/Contents/MacOS/ && ./soffice';
 
         const cmd = `${officeExecPath} --headless --convert-to 'pdf:writer_pdf_Export:{"EncryptFile":{"type":"boolean","value":"true"},"DocumentOpenPassword":{"type":"string","value":"${password}"}}' --outdir /tmp ${tmpInput.name}`;
