@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { writeFileSync, readFileSync } from 'fs';
 import { fileSync } from 'tmp';
+import * as path from 'path';
+import fs from 'fs';
+import os from 'os';
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 
@@ -50,9 +53,12 @@ export class PDFService {
   ): Promise<string> {
     return new Promise<any>(async (resolve, reject) => {
       try {
+        console.log('password: ', password);
         const pdfBuffer = Buffer.from(base64Data, 'base64');
 
-        const tmpInput = fileSync({ postfix: '.pdf' });
+        const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pdf-'));
+        const tmpInput = fileSync({ postfix: '.pdf', tmpdir: tmpDir });
+        console.log('tmpInput: ', tmpInput);
         writeFileSync(tmpInput.name, pdfBuffer);
 
         const tmpOutput = fileSync({ postfix: '.pdf' });

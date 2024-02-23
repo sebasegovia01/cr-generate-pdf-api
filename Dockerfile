@@ -15,6 +15,9 @@ FROM development as production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
+# Instalar OpenJDK para resolver el problema de Java
+RUN apk add --no-cache openjdk11
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
