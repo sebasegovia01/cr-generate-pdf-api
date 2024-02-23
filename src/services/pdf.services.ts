@@ -6,6 +6,8 @@ import * as fs from 'fs';
 import * as os from 'os';
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class PDFService {
@@ -63,16 +65,28 @@ export class PDFService {
 
         //const tmpOutput = fileSync({ postfix: '.pdf' });
 
-        const cmd = `libreoffice --headless --convert-to 'pdf:writer_pdf_Export:{"EncryptFile":{"type":"boolean","value":"true"},"DocumentOpenPassword":{"type":"string","value":"${password}"}}' --outdir /tmp ${tmpInput.name}`;
+        console.log('NODE_ENV: ', process.env.NODE_ENV);
+
+        const officeExecPath =
+          process.env.NODE_ENV === 'production'
+            ? 'libreoffice'
+            : 'cd /Applications/LibreOffice.app/Contents/MacOS/ && ./soffice';
+
+        const cmd = `${officeExecPath} --headless --convert-to 'pdf:writer_pdf_Export:{"EncryptFile":{"type":"boolean","value":"true"},"DocumentOpenPassword":{"type":"string","value":"${password}"}}' --outdir /tmp ${tmpInput.name}`;
+
         console.log(cmd);
         const { stdout, stderr } = await exec(cmd);
         if (stderr) {
+          console.log('ERROR: ', stdout);
           return reject(stderr);
         }
-        console.log(stdout);
+        console.log('SALIDA: ', stdout);
         //const encryptedPdfBuffer = readFileSync(tmpOutput.name);
         // El nombre del archivo encriptado será el mismo que el del archivo de entrada, pero en el directorio /tmp
-        const encryptedPdfPath = path.join(tmpDir, path.basename(tmpInput.name));
+        const encryptedPdfPath = path.join(
+          '/tmp',
+          path.basename(tmpInput.name),
+        );
         const encryptedPdfBuffer = readFileSync(encryptedPdfPath);
 
         tmpInput.removeCallback();
